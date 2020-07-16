@@ -62,8 +62,7 @@ podTemplate(label: 'jenkins-slave-pod',
                  //}
                  withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
                      //docker.image("leeyj7141/centos-httpd:${env.BUILD_ID}").push()
-                     // sh "docker images"
-                     sh "docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
+                     sh "docker images ; sleep 1 ;  docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
                  }
              }
          }
