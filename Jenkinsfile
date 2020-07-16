@@ -26,7 +26,7 @@ podTemplate(label: 'jenkins-slave-pod',
 
 {
     node('jenkins-slave-pod') { 
-        def registry = "10.100.0.174"
+        def registry = "10.100.0.174:5000"
 	def registryCredential = "dockerhub-leeyj7141"
         def githubCredential = "github-leeyj7141"
 
