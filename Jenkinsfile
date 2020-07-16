@@ -45,7 +45,6 @@ podTemplate(label: 'jenkins-slave-pod',
         
          stage('Build docker image') {
              container('docker') {
-                 //withDockerRegistry([ url: "http://$registry" ]) {
                  docker.withRegistry("http://$registry") {
                      sh "docker build -t leeyj7141/centos-httpd:${env.BUILD_ID} -f ./Dockerfile ."
                  }
