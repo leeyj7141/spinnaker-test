@@ -44,20 +44,33 @@ podTemplate(label: 'jenkins-slave-pod',
             }
         }
         
-        stage('Build docker image') {
-            container('docker') {
-                withDockerRegistry([ credentialsId: "$registryCredential", url: "http://$registry" ]) {
-                    sh "docker build -t leeyj7141/centos-httpd:testtag -f ./Dockerfile ."
-                }
-            }
+
+
+        stage('Build image') {
+            app = docker.build("leeyj7141/centos-httpd") 
+        }
+        stage('Push image') {
+            docker.withRegistry('https://docker.io', "$registryCredential")
+                app.push("${env.BUILD_NUMBER}") 
+                app.push("latest") 
         }
 
-        stage('Push docker image') {
-            container('docker') {
-                withDockerRegistry([ credentialsId: "$registryCredential", url: "http://$registry" ]) {
-                    docker.image("leeyj7141/centos-httpd:testtag").push()
-                }
-            }
-        }
+
+
+        // stage('Build docker image') {
+        //     container('docker') {
+        //         withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
+        //             sh "docker build -t leeyj7141/centos-httpd:testtag -f ./Dockerfile ."
+        //         }
+        //     }
+        // }
+
+        // stage('Push docker image') {
+        //     container('docker') {
+        //         withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
+        //             docker.image("leeyj7141/centos-httpd:testtag").push()
+        //         }
+        //     }
+        // }
     }   
 }
