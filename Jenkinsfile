@@ -29,7 +29,6 @@ podTemplate(label: 'jenkins-slave-pod',
         def registry = "docker.io"
 	def registryCredential = "dockerhub-leeyj7141"
         def githubCredential = "github-leeyj7141"
-        // def dockertag =   
 
         // https://jenkins.io/doc/pipeline/steps/git/
         stage('Clone repository') {
@@ -45,17 +44,6 @@ podTemplate(label: 'jenkins-slave-pod',
         }
         
 
-
-        //stage('Build image') {
-        //    app = docker.build("leeyj7141/centos-httpd") 
-        //}
-        //stage('Push image') {
-        //    docker.withRegistry('https://docker.io', "$registryCredential")
-        //        app.push("${env.BUILD_ID}") 
-        //        app.push("latest") 
-        //}
-
-
          stage('Build docker image') {
              container('docker') {
                  withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
@@ -65,12 +53,9 @@ podTemplate(label: 'jenkins-slave-pod',
          }
 
 
-
-
-
          stage('Push docker image') {
              container('docker') {
-                 docker.withRegistry('https://docker.io', "$registryCredential") {
+                 docker.withRegistry("$registry", "$registryCredential") {
                      def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
                      /* Push the container to the custom Registry */
                      customImage.push()
