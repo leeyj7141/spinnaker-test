@@ -27,7 +27,7 @@ podTemplate(label: 'jenkins-slave-pod',
 {
     node('jenkins-slave-pod') { 
         def registry = "10.100.0.174:5000"
-	def registryCredential = "dockerhub-leeyj7141"
+	//def registryCredential = "dockerhub-leeyj7141"
         def githubCredential = "github-leeyj7141"
 
         // https://jenkins.io/doc/pipeline/steps/git/
@@ -45,7 +45,8 @@ podTemplate(label: 'jenkins-slave-pod',
         
          stage('Build docker image') {
              container('docker') {
-                 withDockerRegistry([ url: "http://$registry" ]) {
+                 //withDockerRegistry([ url: "http://$registry" ]) {
+                 docker.withRegistry("http://$registry") {
                      sh "docker build -t leeyj7141/centos-httpd:${env.BUILD_ID} -f ./Dockerfile ."
                  }
              }
@@ -55,14 +56,8 @@ podTemplate(label: 'jenkins-slave-pod',
              container('docker') {
                  docker.withRegistry("http://$registry") {
                      def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
-                     /* Push the container to the custom Registry */
                      customImage.push()
                  }
-                 //withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
-                 //    //docker.image("leeyj7141/centos-httpd:${env.BUILD_ID}").push()
-                 //    //sh "docker images ; sleep 1 ;  docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
-                 //    sh "docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
-                 //}
              }
          }
     }   
