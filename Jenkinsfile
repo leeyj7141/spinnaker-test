@@ -55,7 +55,7 @@ podTemplate(label: 'jenkins-slave-pod',
 
          stage('Push docker image') {
              container('docker') {
-                 docker.withRegistry("$registry", "$registryCredential") {
+                 docker.withRegistry("http://$registry", "$registryCredential") {
                      def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
                      /* Push the container to the custom Registry */
                      customImage.push()
