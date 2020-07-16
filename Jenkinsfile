@@ -51,7 +51,7 @@ podTemplate(label: 'jenkins-slave-pod',
         //}
         //stage('Push image') {
         //    docker.withRegistry('https://docker.io', "$registryCredential")
-        //        app.push("${env.BUILD_TAG}") 
+        //        app.push("${env.BUILD_NUMBER}") 
         //        app.push("latest") 
         //}
 
@@ -59,7 +59,7 @@ podTemplate(label: 'jenkins-slave-pod',
          stage('Build docker image') {
              container('docker') {
                  withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
-                     sh "docker build -t leeyj7141/centos-httpd:${env.BUILD_ID} -f ./Dockerfile ."
+                     sh "docker build -t leeyj7141/centos-httpd:${env.BUILD_NUMBER} -f ./Dockerfile ."
                  }
              }
          }
@@ -67,8 +67,8 @@ podTemplate(label: 'jenkins-slave-pod',
          stage('Push docker image') {
              container('docker') {
                  withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
-                    // docker.image("leeyj7141/centos-httpd:${env.BUILD_ID}").push()
-                    sh "docker push leeyj7141/centos-httpd:${env.BUILD_ID}
+                    // docker.image("leeyj7141/centos-httpd:${env.BUILD_NUMBER}").push()
+                    sh "docker push leeyj7141/centos-httpd:${env.BUILD_NUMBER}
                  }
              }
          }
