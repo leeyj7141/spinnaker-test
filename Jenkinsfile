@@ -26,7 +26,7 @@ podTemplate(label: 'jenkins-slave-pod',
 
 {
     node('jenkins-slave-pod') { 
-        def registry = "docker.io"
+        def registry = "10.100.0.174"
 	def registryCredential = "dockerhub-leeyj7141"
         def githubCredential = "github-leeyj7141"
 
@@ -43,27 +43,26 @@ podTemplate(label: 'jenkins-slave-pod',
             }
         }
         
-
          stage('Build docker image') {
              container('docker') {
-                 withDockerRegistry([ credentialsId: "$registryCredential", url: "http://$registry" ]) {
+                 withDockerRegistry([ url: "http://$registry" ]) {
                      sh "docker build -t leeyj7141/centos-httpd:${env.BUILD_ID} -f ./Dockerfile ."
                  }
              }
          }
 
-
          stage('Push docker image') {
              container('docker') {
-                 //docker.withRegistry("http://$registry", "$registryCredential") {
-                 //    def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
-                 //    /* Push the container to the custom Registry */
-                 //    customImage.push()
-                 //}
-                 withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
-                     //docker.image("leeyj7141/centos-httpd:${env.BUILD_ID}").push()
-                     sh "docker images ; sleep 1 ;  docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
+                 docker.withRegistry("http://$registry") {
+                     def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
+                     /* Push the container to the custom Registry */
+                     customImage.push()
                  }
+                 //withDockerRegistry([ credentialsId: "$registryCredential", url: "https://$registry" ]) {
+                 //    //docker.image("leeyj7141/centos-httpd:${env.BUILD_ID}").push()
+                 //    //sh "docker images ; sleep 1 ;  docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
+                 //    sh "docker push leeyj7141/centos-httpd:${env.BUILD_ID}"
+                 //}
              }
          }
     }   
