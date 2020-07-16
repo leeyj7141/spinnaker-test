@@ -47,8 +47,7 @@ podTemplate(label: 'jenkins-slave-pod',
         stage('Build docker image') {
             container('docker') {
                 withDockerRegistry([ credentialsId: "$registryCredential", url: "http://$registry" ]) {
-                    sh "export TAG=$(uuidgen)"
-                    sh "docker build -t leeyj7141/centos-httpd:$TAG -f ./Dockerfile ."
+                    sh "docker build -t leeyj7141/centos-httpd:testtag -f ./Dockerfile ."
                 }
             }
         }
@@ -56,7 +55,7 @@ podTemplate(label: 'jenkins-slave-pod',
         stage('Push docker image') {
             container('docker') {
                 withDockerRegistry([ credentialsId: "$registryCredential", url: "http://$registry" ]) {
-                    docker.image("leeyj7141/centos-httpd:$TAG").push()
+                    docker.image("leeyj7141/centos-httpd:testtag").push()
                 }
             }
         }
