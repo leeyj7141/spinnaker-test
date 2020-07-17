@@ -66,8 +66,8 @@ podTemplate(label: 'jenkins-slave-pod',
 BUILD_NUMBER: ${BUILD_NUMBER}
 BUILD_TAG: ${BUILD_TAG}
 BUILD_ID: ${BUILD_ID}
-GIT_BRANCH: ${GIT_BRANCH}
-GIT_COMMIT: ${GIT_COMMIT}
+GIT_BRANCH: ${env.GIT_BRANCH}
+GIT_COMMIT: ${env.GIT_COMMIT}
 GIT_URL: ${GIT_URL}
 JOB_NAME: ${JOB_NAME}
 JOB_URL: ${JOB_URL}
@@ -77,6 +77,14 @@ JOB_URL: ${JOB_URL}
          stage('Get ENV') {
              container('node') {
                    sh ' ls -l  '
+             }
+         }
+         stage('Git push') {
+             container('git') {
+                withCredentials([usernamePassword(credentialsId: "$githubCredential", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh('git tag -a $BUILD_ID -m "Jenkins $BUILD_ID"')
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@https://github.com/leeyj7141/cicd-test-spinnaker.git --tags')
+                }
              }
          }
     }   
