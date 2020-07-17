@@ -85,16 +85,19 @@ metadata:
   namespace: test
   name: webserver-test
   labels:
-    app: webserver-test
+    tire: webserver-test
+  annotations:
+    strategy.spinnaker.io/max-version-history: '2' 
+    traffic.spinnaker.io/load-balancers: '["service test-webserver-service"]'
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: webserver-test
+      tire: webserver-test
   template:
     metadata:
       labels:
-        app: webserver-test
+        tire: webserver-test
     spec:
       containers:
       - name: mywebserver-test
