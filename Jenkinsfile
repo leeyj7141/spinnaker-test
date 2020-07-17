@@ -27,8 +27,8 @@ podTemplate(label: 'jenkins-slave-pod',
 {
     node('jenkins-slave-pod') { 
         def registry = "10.100.0.174:5000"
-	//def registryCredential = "dockerhub-leeyj7141"
         def githubCredential = "github-leeyj7141"
+	//def registryCredential = "dockerhub-leeyj7141"
 
         // https://jenkins.io/doc/pipeline/steps/git/
         stage('Clone repository') {
@@ -57,6 +57,19 @@ podTemplate(label: 'jenkins-slave-pod',
                      def customImage = docker.build("leeyj7141/centos-httpd:${env.BUILD_ID}")
                      customImage.push()
                  }
+             }
+         }
+         stage('Set ENV') {
+             container('node') {
+                    echo "---
+                    BUILD_NUMBER: ${BUILD_NUMBER}
+                    BUILD_TAG: ${BUILD_TAG}
+                    GIT_BRANCH: ${GIT_BRANCH}
+                    GIT_COMMIT: ${GIT_COMMIT}
+                    GIT_URL: ${GIT_URL}
+                    JOB_NAME: ${JOB_NAME}
+                    JOB_URL: ${JOB_URL}
+                    " 
              }
          }
     }   
