@@ -61,7 +61,8 @@ podTemplate(label: 'jenkins-slave-pod',
          }
          stage('Set ENV') {
              container('node') {
-                   sh 'echo "---
+                   sh ''' 
+                    echo "---
                     BUILD_NUMBER: ${BUILD_NUMBER}
                     BUILD_TAG: ${BUILD_TAG}
                     GIT_BRANCH: ${GIT_BRANCH}
@@ -69,7 +70,7 @@ podTemplate(label: 'jenkins-slave-pod',
                     GIT_URL: ${GIT_URL}
                     JOB_NAME: ${JOB_NAME}
                     JOB_URL: ${JOB_URL}
-                    "'
+                    " > trproperties.yml '''
              }
          }
     }   
