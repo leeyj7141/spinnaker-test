@@ -65,6 +65,7 @@ podTemplate(label: 'jenkins-slave-pod',
                     echo "---
 BUILD_NUMBER: ${BUILD_NUMBER}
 BUILD_TAG: ${BUILD_TAG}
+BUILD_ID: ${BUILD_ID}
 GIT_BRANCH: ${GIT_BRANCH}
 GIT_COMMIT: ${GIT_COMMIT}
 GIT_URL: ${GIT_URL}
