@@ -85,7 +85,7 @@ JOB_URL: ${JOB_URL}
                     sh('git config --global user.email "yjlee@linux.com"')
                     sh('git config --global user.name "youngju LEE"')
                     sh('git tag -a $BUILD_ID -m "Jenkins $BUILD_ID"')
-                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@https://github.com/leeyj7141/cicd-test-spinnaker.git --tags')
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/leeyj7141/cicd-test-spinnaker.git --tags')
                 }
              }
          }
