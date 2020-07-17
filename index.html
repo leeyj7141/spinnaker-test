@@ -1,8 +1,10 @@
 <html>
 <body>
-<p>hostname: $(hostname)</p>
-<p>date: $(date)</p>
 Hello World!!  youngju LEE
-version 13 
+version 14 
+<p>
+<script> document.write(new Date().toLocaleDateString()); </script>
+<?php echo gethostname(); ?>
+</p>
 </body>
 </html>
