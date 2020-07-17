@@ -81,7 +81,7 @@ JOB_URL: ${JOB_URL}
          }
          stage('Git push') {
              container('git') {
-                withCredentials([usernamePassword(credentialsId: "$githubCredential", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: "github-http-auth", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     sh('git config --global user.email "yjlee@linux.com"')
                     sh('git config --global user.name "youngju LEE"')
                     sh('git tag -a $BUILD_ID -m "Jenkins $BUILD_ID"')
