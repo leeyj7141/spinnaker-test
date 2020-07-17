@@ -74,7 +74,37 @@ JOB_URL: ${JOB_URL}
                     " > trproperties.yml '''
              }
          }
-         stage('Get ENV') {
+
+         stage('Create ReplicaSet File') {
+             container('node') {
+                   sh ''' 
+                    echo "---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  namespace: test
+  name: webserver-test
+  labels:
+    app: webserver-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver-test
+  template:
+    metadata:
+      labels:
+        app: webserver-test
+    spec:
+      containers:
+      - name: mywebserver-test
+        image: 10.100.0.174:5000/leeyj7141/centos-httpd:${BUILD_NUMBER}
+        ports:
+          - containerPort: 80
+                    " > replica.yml '''
+             }
+         }
+         stage('List files ') {
              container('node') {
                    sh ' ls -l  '
              }
@@ -87,6 +117,7 @@ JOB_URL: ${JOB_URL}
                     sh('git branch spinnaker')
                     sh('git checkout spinnaker')
                     sh('git add trproperties.yml')
+                    sh('git add replica.yml')
                     sh('git commit -m "Jenkins build $BUILD_ID th"')
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/leeyj7141/spinnaker-test.git spinnaker -f')
                 }
