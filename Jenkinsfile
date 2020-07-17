@@ -82,28 +82,28 @@ JOB_URL: ${JOB_URL}
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  namespace: test
-  name: webserver-test
-  labels:
-    tire: webserver-test
   annotations:
-    strategy.spinnaker.io/max-version-history: 4
-    traffic.spinnaker.io/load-balancers: '["service my-service"]'
+    strategy.spinnaker.io/max-version-history: '2'
+    traffic.spinnaker.io/load-balancers: '["service auth"]' 
+  labels:
+    tier: auth
+  name: auth
+  namespace: test
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      tire: webserver-test
+      tier: auth
   template:
     metadata:
       labels:
-        tire: webserver-test
+        tier: auth
     spec:
       containers:
-      - name: mywebserver-test
-        image: 10.100.0.174:5000/leeyj7141/centos-httpd:${BUILD_NUMBER}
-        ports:
-          - containerPort: 80
+        - image: 10.100.0.174:5000/leeyj7141/centos-httpd:${BUILD_NUMBER}
+          name: auth
+          ports:
+            - containerPort: 80
 " > replica.yml '''
              }
          }
