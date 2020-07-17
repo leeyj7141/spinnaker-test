@@ -87,7 +87,7 @@ metadata:
   labels:
     tire: webserver-test
   annotations:
-    strategy.spinnaker.io/max-version-history: '3'
+    strategy.spinnaker.io/max-version-history: '4'
     traffic.spinnaker.io/load-balancers: '["service test-webserver-service"]'
 spec:
   replicas: 3
