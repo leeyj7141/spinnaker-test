@@ -83,14 +83,14 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   annotations:
-    strategy.spinnaker.io/max-version-history: '2'
+    strategy.spinnaker.io/max-version-history: '3'
     traffic.spinnaker.io/load-balancers: '["service auth"]' 
   labels:
     tier: auth
   name: auth
   namespace: test
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       tier: auth
