@@ -87,7 +87,7 @@ metadata:
   labels:
     tire: webserver-test
   annotations:
-    strategy.spinnaker.io/max-version-history: '4'
+    strategy.spinnaker.io/max-version-history: 4
     traffic.spinnaker.io/load-balancers: '["service test-webserver-service"]'
 spec:
   replicas: 3
@@ -104,7 +104,7 @@ spec:
         image: 10.100.0.174:5000/leeyj7141/centos-httpd:${BUILD_NUMBER}
         ports:
           - containerPort: 80
-                    " > replica.yml '''
+" > replica.yml '''
              }
          }
          stage('List files ') {
