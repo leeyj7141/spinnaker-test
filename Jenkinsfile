@@ -86,6 +86,8 @@ metadata:
   name: webserver-test
   labels:
     tire: webserver-test
+  annotations:
+    traffic.spinnaker.io/load-balancers: '["service my-service"]'
 spec:
   replicas: 3
   selector:
