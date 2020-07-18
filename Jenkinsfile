@@ -84,24 +84,24 @@ kind: ReplicaSet
 metadata:
   annotations:
     strategy.spinnaker.io/max-version-history: '3'
-    traffic.spinnaker.io/load-balancers: \'[\\\"service auth\\\"]\' 
+    traffic.spinnaker.io/load-balancers: \'[\\\"service webserver-service\\\"]\' 
   labels:
-    tier: auth
-  name: auth
+    tier: webserver
+  name: webserver
   namespace: test
 spec:
   replicas: 2
   selector:
     matchLabels:
-      tier: auth
+      tier: webserver
   template:
     metadata:
       labels:
-        tier: auth
+        tier: webserver
     spec:
       containers:
         - image: 10.100.0.174:5000/leeyj7141/centos-httpd:${BUILD_NUMBER}
-          name: auth
+          name: webserver
           ports:
             - containerPort: 80
 " > replica.yml '''
