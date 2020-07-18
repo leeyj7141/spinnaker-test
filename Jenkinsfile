@@ -122,6 +122,7 @@ spec:
                     sh('git add trproperties.yml')
                     sh('git add replica.yml')
                     sh('git commit -m "Jenkins build $BUILD_ID th"')
+                    sh('git tag -a v$BUILD_ID -m "vesion $BUILD_ID "')
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/leeyj7141/spinnaker-test.git spinnaker -f')
                 }
              }
