@@ -1,0 +1,10 @@
+---
+BUILD_NUMBER: 74
+BUILD_TAG: jenkins-build-test3-74
+BUILD_ID: 74
+GIT_BRANCH: 
+GIT_COMMIT: 
+GIT_URL: 
+JOB_NAME: build-test3
+JOB_URL: http://jenkins:8080/job/build-test3/
+                    
