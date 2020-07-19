@@ -2,31 +2,10 @@
 <body>
 <p>Hello World!!</p> 
 <p>youngju LEE's test webesrver</p>
-<p>version 25 </p>
+<p>version 26 </p>
 <p><script> document.write(new Date()); </script></p>
 <p><script> document.write( location.hostname ); </script></p>
 </p>
-
-
-<%@ Language=JavaScript %>
-<%
-Response.Expires = -1
-Response.AddHeader('Pragma','no-cache')
-Response.AddHeader('cache-control','no-store')
-var WshNetwork = server.CreateObject("WScript.Network");
-var MachineNameServerSide = WshNetwork.ComputerName;
-
-%>
-
-Machine name = <%=MachineNameServerSide %>
-
-<script LANGUAGE="JavaScript">
-<!--
-var MachineNameClientSide = '<%=MachineNameServerSide %>';
--->
-</script>
-
-<input type="button" onclick="alert('Machine name of the server is ' + MachineNameClientSide);" />
 
 
 </body>
